@@ -1,0 +1,65 @@
+<!-- navbar.html -->
+{% load static %}
+
+<nav class="navbar">
+    <a href="{% url 'login' %}" class="logo">
+        <img src="{% static 'photos/logo2.png' %}" alt="Logo" style="height:60px;">
+    </a>
+    <div class="navbar-links">
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'change_pas' %}">ZMIEŃ DANE</a>
+            <a href="{% url 'logout' %}">WYLOGUJ</a>
+        {% else %}
+            <a href="{% url 'login' %}">ZALOGUJ</a>
+            <a href="{% url 'register' %}">ZAREJESTRUJ</a>
+        {% endif %}
+    </div>
+</nav>
+
+<style>
+     @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .navbar {
+        width: 100vw;
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #1B262C;
+        padding: 0 30px;
+        font-family: "Audiowide", sans-serif;
+        position: sticky;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+    }
+
+    .navbar a {
+        text-decoration: none;
+        color: #ffffff;
+        font-weight: 500;
+        font-size: 16px;
+        transition: color 0.3s;
+    }
+
+    .navbar a:hover {
+        color: #cccccc;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        font-size: 24px;
+    }
+
+    .navbar-links {
+        display: flex;
+        gap: 20px;
+    }
+</style>

@@ -1,0 +1,96 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Audiowide', sans-serif;
+    background-color: #f0f8ff;
+    color: #333;
+}
+
+.main {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 48px;
+    margin-bottom: 10px;
+    color: #1c1c1c;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
+}
+
+.photo_wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 700px;
+    width: 100%;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.photo img {
+    max-width: 100%;
+    border-radius: 15px;
+    border: 6px solid #a41515;
+    box-shadow: 0 8px 16px rgba(164, 21, 21, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.photo img:hover {
+    transform: scale(1.02);
+}
+
+.back-button {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background-color: #a41515;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.back-button:hover {
+    background-color: #870f0f;
+    transform: scale(1.05);
+}
+
+/* Animation for smooth entrance */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+<div class="main">
+    <div class="photo_wrapper">
+        {% if photo %}
+        <h1>Zrobione zdjęcie</h1>
+        <div class="photo">
+            <img src="{{ photo.image.url }}" alt="Zrobione zdjęcie">
+        </div>
+        {% endif %}
+    </div>
+
+    <a href="{% url 'home' %}" class="back-button">Powrót do strony głównej</a>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,46 @@
+# Środowisko wirtualne
+.venv/
+venv/
+env/
+env.bak/
+venv.bak/
+/media/
+venv310
+
+# Pliki bazy danych SQLite
+db.sqlite3
+
+# Pliki logów
+*.log
+
+# Pliki dotyczące IDE i edytorów
+.idea/
+*.swp
+*.swo
+
+# Pliki systemowe
+.DS_Store
+Thumbs.db
+
+# Zależności w Django (plik __pycache__ i inne pliki kompilacji)
+__pycache__/
+*.pyc
+
+# Zależności
+*.egg-info/
+
+# Plik konfiguracji PyCharm
+.idea/
+
+# Python Bytecode files
+*.pyc
+
+# Testy pytest
+*.coverage
+nosetests.xml
+coverage.xml
+*.cover
+
+# Pliki tymczasowe
+*.bak
+*.tmp

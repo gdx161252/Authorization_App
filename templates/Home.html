@@ -1,0 +1,179 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        font-family: "Audiowide", sans-serif;
+        font-weight: bold;
+        background-color: #f0f8ff;
+    }
+
+    .main {
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        padding: 20px;
+    }
+
+    .pannel_hello {
+        background-color: lightgreen;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        border-radius: 30px;
+        width: 100%;
+        max-width: 1260px;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .panel-row {
+        display: flex;
+        gap: 30px;
+        justify-content: center;
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .pannel_questions,
+    .pannel_beh,
+    .pannel_authenticator,
+    .pannel_questions_done,
+    .pannel_behevioral_done,
+    .pannel_authenticator_done{
+        flex: 1;
+        width: 100%;
+        min-height: 560px;
+        min-width: 400px;
+        background-color: #89CFF0;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        border-radius: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+
+    }
+
+    .pannel_questions:Hover{
+        transition: color 0.3s;
+        background-color: #6a9eb8;
+    }
+
+    .pannel_beh {
+        background-color: pink;
+    }
+
+    .pannel_beh:Hover{
+        transition: color 0.3s;
+        background-color: #cd9ba5;
+    }
+
+    .pannel_authenticator{
+        background-color: indianred;
+
+    }
+    .pannel_authenticator:Hover{
+        transition: color 0.3s;
+        background-color: #9a4747;
+    }
+    .pannel_questions_done,
+    .pannel_behevioral_done,
+    .pannel_authenticator_done{
+        background-color: rgba(40, 156, 214, 0.09);
+        position: relative;
+        width: fit-content;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .overlay-img {
+    position: absolute;
+    height: 200px;
+    }
+
+
+
+</style>
+
+<div class="main">
+    <div class="pannel_hello">
+        {% if request.user.is_authenticated %}
+            <h1>Witaj {{ request.user }}</h1>
+        {% endif %}
+    </div>
+
+    <div class="panel-row">
+
+        <a href="{% url 'questions' %}" class="logo">
+
+            {% if not questions or question.questions_1 %}
+
+            <div class="pannel_questions">
+                 <img src="{% static 'photos/question.png' %}" alt="question" style="height:90px;">
+            </div>
+
+             {% else %}
+
+                <div class="pannel_questions_done">
+                    <img src="{% static 'photos/question.png' %}" alt="question" style="height:90px;">
+                    <img src="{% static 'photos/correct.png' %}" alt="Correct" class="overlay-img">
+                </div>
+
+            {% endif %}
+        </a>
+
+        <a href="{% url 'behavioral' %}" class="logo">
+            {% if photo %}
+
+            <div class="pannel_behevioral_done">
+                    <img src="{% static 'photos/behavioral.png' %}" alt="behevioral" style="height:90px;">
+                    <img src="{% static 'photos/correct.png' %}" alt="Correct" class="overlay-img">
+            </div>
+            {% else %}
+
+                <div class="pannel_beh">
+                 <img src="{% static 'photos/behavioral.png' %}" alt="behevioral" style="height:90px;">
+                </div>
+
+            {% endif %}
+        </a>
+
+
+
+        <a href="{% url 'setup_authenticator' %}" class="logo">
+
+            {% if profile.authenticator_enabled  %}
+
+                <div class="pannel_authenticator_done">
+                     <img src="{% static 'photos/auth_app.png' %}" alt="authenticator" style="height:90px;">
+                    <img src="{% static 'photos/correct.png' %}" alt="Correct" class="overlay-img">
+                </div>
+
+            {% else %}
+
+                <div class="pannel_authenticator">
+                     <img src="{% static 'photos/auth_app.png' %}" alt="authenticator" style="height:90px;">
+                </div>
+
+            {% endif %}
+        </a>
+
+
+
+    </div>
+</div>
+
+{% endblock content %}
+
+
+
+

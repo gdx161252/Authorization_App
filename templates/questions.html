@@ -1,0 +1,124 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <style>
+     @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+    body {
+        background-color: #f2f8fb;
+        font-family: "Audiowide", sans-serif;
+    }
+
+    .question-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 60px 20px;
+        min-height: 100vh;
+    }
+
+    .question-form {
+        background-color: #eaf4fc;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        width: 100%;
+    }
+
+    .question-form h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .question-form label {
+        font-weight: bold;
+        margin-top: 15px;
+    }
+
+    .question-form input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+        font-family: "Audiowide", sans-serif;
+    }
+
+    .question-form button {
+        width: 100%;
+        padding: 10px;
+        background-color: #87b7e3;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+        font-family: "Audiowide", sans-serif;
+    }
+
+    .question-form button:hover {
+        background-color: #6ea2cb;
+    }
+
+    .success-box {
+    background-color: #e6f3fc;
+    border: 2px solid #6ea2cb;
+    color: #6ea2cb;
+    text-align: center;
+    padding: 20px 30px;
+    border-radius: 12px;
+    margin-top: 25px;
+    font-weight: bold;
+    font-size: 18px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    animation: pop-in 0.4s ease-out;
+}
+
+.success-box i {
+    font-style: normal;
+    font-size: 26px;
+    margin-right: 8px;
+}
+</style>
+
+<div class="question-wrapper">
+    <form method="post" class="question-form">
+        {% csrf_token %}
+        <h2>Weryfikacja konta</h2>
+
+        <label for="question1">Jakie jest imię Twojego pierwszego zwierzaka?</label>
+        <input type="text" id="question1" name="question1" required>
+
+        <label for="question2">W jakim mieście się urodziłeś/aś?</label>
+        <input type="text" id="question2" name="question2" required>
+
+        <label for="question3">Jaki jest Twój ulubiony film?</label>
+        <input type="text" id="question3" name="question3" required>
+
+        <button type="submit">Potwierdź odpowiedzi</button>
+
+        {% if messages %}
+                    {% for message in messages %}
+                    <div class="success-box">
+                        <p>{{ message }}</p>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+    </form>
+</div>
+
+{% if redirect_after %}
+<script>
+    // Po 2 sekundach przekieruj na stronę główną
+    setTimeout(function() {
+        window.location.href = "{% url 'home' %}";
+    }, 2000);
+</script>
+{% endif %}
+{% endblock content %}
+

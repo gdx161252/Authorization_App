@@ -1,0 +1,153 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <style>
+     @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+    body {
+        background-color: #f2f8fb;
+        font-family: "Audiowide", sans-serif;
+    }
+
+    .changes_wrapper {
+    display: flex;
+    flex-direction: column; /* <-- to dodaj */
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+    min-height: 100vh;
+    }
+
+
+    .changes-form {
+        background-color: #fdc4c4;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        width: 100%;
+    }
+
+    .changes-form h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .changes-form label {
+        font-weight: bold;
+        margin-top: 15px;
+    }
+
+    .changes-form input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+        font-family: "Audiowide", sans-serif;
+    }
+
+    .changes-form button {
+        width: 100%;
+        padding: 10px;
+        background-color: #e15a5a;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+        font-family: "Audiowide", sans-serif;
+    }
+
+    .changes-form button:hover {
+        background-color: #953a3a;
+    }
+
+    .success-box {
+    background-color: #e6f3fc;
+    border: 2px solid #6ea2cb;
+    color: #6ea2cb;
+    text-align: center;
+    padding: 20px 30px;
+    border-radius: 12px;
+    margin-top: 25px;
+    font-weight: bold;
+    font-size: 18px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    animation: pop-in 0.4s ease-out;
+}
+
+.success-box i {
+    font-style: normal;
+    font-size: 26px;
+    margin-right: 8px;
+}
+
+.button{
+        padding: 10px;
+        background-color:  #e15a5a;
+        color: white;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+        font-family: "Audiowide", sans-serif;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+
+}
+
+.button:hover{
+    background-color: #953a3a;
+}
+
+.go-back-button {
+    display: block;
+    margin-top: 70px;
+    font-size: 18px;
+    text-align: center;
+    text-decoration: none;
+    padding: 12px;
+    width: 100%;
+    max-width: 500px;
+}
+
+</style>
+
+<div class="changes_wrapper">
+    <form method="post" class="changes-form">
+        {% csrf_token %}
+        <h2>Zamiana danych </h2>
+
+        <label for="New_login">Podaj nowy login</label>
+        <input type="text" id="New_login" name="New_login">
+
+        <label for="New_password">Podaj nowe Hasło</label>
+        <input type="text" id="New_password" name="New_password">
+
+        <button type="submit">Zatwierdz</button>
+
+        {% if messages %}
+                    {% for message in messages %}
+                    <div class="success-box">
+                        <p>{{ message }}</p>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+
+    </form>
+
+
+    <a href="{% url 'home' %}" class="button go-back-button">
+     Wróć do strony głównej
+    </a>
+
+</div>
+
+{% endblock content %}
+

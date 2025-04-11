@@ -1,0 +1,224 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <style>
+     @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+    body {
+        background-color: #f2f8fb;
+        font-family: "Audiowide", sans-serif;
+    }
+
+    .changes_wrapper {
+    display: flex;
+    flex-direction: column; /* <-- to dodaj */
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+    min-height: 100vh;
+    }
+
+
+    .changes-form {
+        background-color: rgba(255, 83, 83, 0.75);
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        width: 100%;
+    }
+
+    .changes-form h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .changes-form label {
+        font-weight: bold;
+        margin-top: 15px;
+    }
+
+    .changes-form input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+        font-family: "Audiowide", sans-serif;
+    }
+
+    .changes-form button {
+        width: 100%;
+        padding: 10px;
+        background-color: #e15a5a;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+        font-family: "Audiowide", sans-serif;
+    }
+
+    .changes-form button:hover {
+        background-color: #953a3a;
+    }
+
+    .success-box {
+    background-color: #e6f3fc;
+    border: 2px solid #6ea2cb;
+    color: #6ea2cb;
+    text-align: center;
+    padding: 20px 30px;
+    border-radius: 12px;
+    margin-top: 25px;
+    font-weight: bold;
+    font-size: 18px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    animation: pop-in 0.4s ease-out;
+}
+
+.success-box i {
+    font-style: normal;
+    font-size: 26px;
+    margin-right: 8px;
+}
+
+.button{
+        padding: 10px;
+        background-color:  #e15a5a;
+        color: white;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+        font-family: "Audiowide", sans-serif;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+
+}
+
+.button:hover{
+    background-color: #953a3a;
+}
+
+.go-back-button {
+    display: block;
+    margin-top: 70px;
+    font-size: 18px;
+    text-align: center;
+    text-decoration: none;
+    padding: 12px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.login-selector {
+    position: relative;
+    display: inline-block;
+    margin: 20px 0 30px;
+    font-family: "Audiowide", sans-serif;
+    width: 100%;
+    text-align: center;
+}
+
+.dropdown-button {
+    background-color: #7895CB;
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.dropdown-button:hover {
+    background-color: #5f79b3;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f0f8ff;
+    min-width: 240px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 10px;
+    z-index: 10;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 12px 18px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.2s;
+    font-size: 14px;
+}
+
+.dropdown-content a:hover {
+    background-color: #d6eaff;
+}
+
+.login-selector:hover .dropdown-content {
+    display: block;
+}
+
+
+</style>
+
+<div class="changes_wrapper">
+
+
+    <form method="post" class="changes-form">
+        {% csrf_token %}
+        <h2>POTWIERDZ TOŻSAMOŚĆ </h2>
+
+        <label for="Mail_code">Kod z maila</label>
+        <input type="text" id="mail_code" name="mail_code" required>
+
+
+
+        <button type="submit">Zatwierdz</button>
+
+        {% if messages %}
+                    {% for message in messages %}
+                    <div class="success-box">
+                        <p>{{ message }}</p>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+    </form>
+
+
+</div>
+<script>
+    function toggleDropdown() {
+        const dropdown = document.getElementById('question-dropdown');
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function selectQuestion(questionText) {
+        document.getElementById('selected-question').value = questionText;
+        document.getElementById('question-dropdown').style.display = 'none';
+    }
+
+    // zamykanie dropdowna po kliknięciu poza
+    document.addEventListener('click', function(event) {
+        const dropdown = document.getElementById('question-dropdown');
+        const button = document.querySelector('.dropdown-button');
+        if (!dropdown.contains(event.target) && !button.contains(event.target)) {
+            dropdown.style.display = 'none';
+        }
+    });
+</script>
+
+{% endblock content %}
+

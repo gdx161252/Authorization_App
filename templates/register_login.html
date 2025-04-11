@@ -1,0 +1,243 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+
+body {
+    background-color: {% if page == 'login' %}#eaf4fc{% else %}#e8f7ee{% endif %};
+    font-family: "Audiowide", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 60px;
+    min-height: 100vh;
+}
+
+.login-panels {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 30px;
+}
+
+.form-section,
+.face-id-login,
+.auth-phone-login {
+    background-color: {% if page == 'login' %}#89CFF0{% else %}#cbf6de{% endif %};
+    padding: 30px 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 360px;
+    min-height: 360px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: 0.3s;
+}
+
+.form-section:hover,
+.face-id-login:hover,
+.auth-phone-login:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+h1 {
+    font-size: 48px;
+    color: #333;
+    margin-bottom: 85px;
+    margin-top: 20px;
+}
+
+h2 {
+    font-size: 26px;
+    color: #222;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.auth{
+    margin-top: 45px; /* obrazek od authenticatora*/
+}
+
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #fff;
+}
+
+button {
+    padding: 12px;
+    background-color: {% if page == 'login' %}#7895CB{% else %}#a7d8c9{% endif %};
+    border: none;
+    color: white;
+    font-size: 15px;
+    font-family: "Audiowide", sans-serif;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    opacity: 0.95;
+}
+
+.face_id_button {
+    background-color: #89CFF0;
+    margin-bottom: 12px;
+}
+
+.link {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.link a {
+    color: #444;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.link a:hover {
+    text-decoration: underline;
+}
+
+.error-box {
+    background-color: #fdecea;
+    color: #a94442;
+    border: 1px solid #f5c6cb;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+img {
+    display: block;
+    margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+    .login-panels {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .form-section,
+    .face-id-login,
+    .auth-phone-login {
+        max-width: 90%;
+    }
+}
+</style>
+
+<div class="page-wrapper">
+    {% if page == 'login' %}
+        <h1>LOGOWANIE</h1>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="error-box">
+                    <p>{{ message }}</p>
+                    <p><a href="{% url 'forget' %}">Nie pamiętasz loginu lub hasła?</a></p>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="login-panels">
+
+            <!-- FACE ID -->
+            <div class="face-id-login">
+                <h2>FACE ID</h2>
+                <form method="post" action="{% url 'face_id_login' %}">
+                    {% csrf_token %}
+                    <input type="text" name="username" placeholder="Nazwa użytkownika" required>
+                    <button type="submit" class="face_id_button">
+                        <img src="{% static 'photos/face_id.png' %}" alt="face_id_icon" style="height: 100px;">
+                    </button>
+                </form>
+            </div>
+
+            <!-- LOGIN + HASŁO -->
+            <div class="form-section">
+                <h2>LOGIN + HASŁO</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="text" name="username" placeholder="Nazwa użytkownika" required>
+                    <input type="password" name="password" placeholder="Hasło" required>
+                    <button type="submit">Zaloguj się</button>
+                </form>
+                <div class="link">
+                    <p>Nie masz jeszcze konta?</p>
+                    <a href="{% url 'register' %}">Zarejestruj się</a>
+                </div>
+            </div>
+
+            <!-- AUTHENTICATOR -->
+            <div class="auth-phone-login">
+                <h2>AUTHENTICATOR</h2>
+                <a class="auth" href="/authenticator/login/">
+                    <img src="{% static 'photos/auth_app.png' %}" alt="authenticator_icon"  style="height: 100px;">
+                </a>
+            </div>
+        </div>
+
+    {% else %}
+        <h1>REJESTRACJA</h1>
+
+        <div class="login-panels">
+            <div class="form-section">
+                <h2>Utwórz konto</h2>
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="error-box">
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="text" name="username" placeholder="Nazwa użytkownika" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="password" name="password1" placeholder="Hasło" required>
+                    <input type="password" name="password2" placeholder="Potwierdź hasło" required>
+                    <button type="submit">Zarejestruj się</button>
+                </form>
+
+                <div class="link">
+                    <p>Masz już konto?</p>
+                    <a href="{% url 'login' %}">Zaloguj się</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock content %}
