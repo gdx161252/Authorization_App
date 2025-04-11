@@ -1,4 +1,4 @@
-========================== Jak Zainstalwoać Aplikacje Autoryzacji ==========================
+=============== Jak Zainstalwoać Aplikacje Autoryzacji ===============
 
 Aplikacja była tworzona na systemie windows z pythonme w wersji 3.10, Django w wersji 5.2.  ! Inne wersje mogą nie działać !
 
